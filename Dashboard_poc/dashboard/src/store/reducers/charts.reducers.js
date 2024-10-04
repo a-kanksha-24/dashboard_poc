@@ -7,7 +7,8 @@ const initialState = {
         titleFontSize: 10,
         titleFontWeight: 400,
         titleColor: '#4b5462',
-      }
+      },
+      activeAccordion:null
 };
 
 const ChartReducer = createSlice({
@@ -16,10 +17,13 @@ const ChartReducer = createSlice({
   reducers: {
     setChartSettings: (state, action) => {
       state.chartSettings = action.payload;
+    },
+    setActiveAccordion:(state,action)=>{
+      state.activeAccordion=action.payload;
     }
   },
 });
 
-export const { setChartSettings} = ChartReducer.actions;
+export const { setChartSettings,setActiveAccordion} = ChartReducer.actions;
 
 export default ChartReducer.reducer;
