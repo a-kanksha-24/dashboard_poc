@@ -1,10 +1,20 @@
 // src/components/BarChart.js
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import Chart from 'react-apexcharts';
 import ChartCard from './ChartCard';
-
-const BarChart = ({ chartSettings, data }) => {
-  
+import { selectChartSettings } from '../store/selectors/charts.selectors';
+const BarChart = () => {
+  const chartSettings=useSelector(selectChartSettings)
+  const data = {
+    categories: ['HR', 'Engineering', 'Operations'],
+    series: [
+      {
+        name: 'Salary',
+        data: [70000, 150000, 80000],
+      },
+    ],
+  };
   const getResponsiveOptions = () => {
     const screenWidth = window.innerWidth;
 

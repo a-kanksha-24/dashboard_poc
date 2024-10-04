@@ -2,6 +2,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { selectChartSettings } from '../store/selectors/charts.selectors';
 import { setChartSettings } from '../store/reducers/charts.reducers';
+import Example from './accordian';
 const ChartSettings = () => {
 const chartSettings=useSelector(selectChartSettings)
 const dispatch=useDispatch()
@@ -58,7 +59,7 @@ const handleDownloadSettings = () => {
   return (
     <div className="w-64 bg-gray-100 p-4">
       <h3 className="text-lg font-semibold mb-4">Customize Chart</h3>
-
+      <Example/>
     
       <div className="mb-6">
         <h4 className="text-sm font-medium mb-2">Colors</h4>

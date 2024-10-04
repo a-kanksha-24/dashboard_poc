@@ -5,10 +5,12 @@ import RadialChart from './RadialChart';
 import BarChart from './BarChart';
 import LineChart from './LineChart';
 import PieChart from './PieChart';
-import { selectChartSettings } from '../store/selectors/charts.selectors';
+import { selectActiveAccordion, selectChartSettings } from '../store/selectors/charts.selectors';
+
 
 const ChartDisplay = () => {
   const chartSettings=useSelector(selectChartSettings)
+  const activeAccordion=useSelector(selectActiveAccordion)
   
   const radialValue = 68812.5;
   const barData = {
@@ -35,13 +37,22 @@ const ChartDisplay = () => {
   };
 
   return (
-    <div className="flex-grow p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <RadialChart chartSettings={chartSettings} value={radialValue} />
-      <BarChart chartSettings={chartSettings} data={barData} />
-      <LineChart chartSettings={chartSettings} data={lineData} />
-      <PieChart chartSettings={chartSettings} data={pieData} />
+    <div className="flex-grow p-6 flex items-center justify-center">
+      {activeAccordion === 'Radial Chart' && (
+        <RadialChart chartSettings={chartSettings} value={radialValue} />
+      )}
+      {activeAccordion === 'Bar Graph' && (
+        <BarChart chartSettings={chartSettings} data={barData} />
+      )}
+      {activeAccordion === 'Line Graph' && (
+        <LineChart chartSettings={chartSettings} data={lineData} />
+      )}
+      {activeAccordion === 'Pie Chart' && (
+        <PieChart chartSettings={chartSettings} data={pieData} />
+      )}
     </div>
   );
+  
 };
 
 export default ChartDisplay;

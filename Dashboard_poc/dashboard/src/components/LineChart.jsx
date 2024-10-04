@@ -12,7 +12,7 @@ const LineChart = ({ chartSettings, data }) => {
 
     
     if (screenWidth < 640) { 
-      titleFontSize = '14px'; 
+      titleFontSize = '10px'; 
     } else if (screenWidth < 1024) { 
       titleFontSize = `${chartSettings.titleFontSize - 2}px`; 
     }
