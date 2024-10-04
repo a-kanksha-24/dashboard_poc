@@ -1,8 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
-import ChartReducer from './reducers/charts.reducers'
 
+
+
+import  { radialChartReducer,barChartReducer,lineChartReducer,pieChartReducer} from './reducers/charts.reducers'
 export const store = configureStore({
   reducer: {
-    chart: ChartReducer, 
+    radialChart: radialChartReducer,
+    barChart: barChartReducer,
+    lineChart: lineChartReducer,
+    pieChart: pieChartReducer,
   },
 });

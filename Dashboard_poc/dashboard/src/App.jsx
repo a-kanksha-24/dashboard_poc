@@ -1,13 +1,11 @@
-// src/App.js
-// import React, { useState } from 'react';
-import ChartSettings from './components/ChartSettings';
 import ChartDisplay from './components/ChartDisplay';
+import ChartAccordion from './components/ChartAccordian';
 
 function App() {
 
   return (
     <div className="flex">
-      <ChartSettings />
+      <ChartAccordion />
       <ChartDisplay  />
     </div>
   );

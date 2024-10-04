@@ -1,67 +1,146 @@
+// // src/components/ChartSettings.jsx
+// import React, { useState } from 'react';
+// import { useSelector, useDispatch } from 'react-redux';
+// // import { selectChartSettings } from '../store/selectors/charts.selectors';
+// // import { setChartSettings } from '../store/reducers/charts.reducers';
 
+// const ChartSettings = ({ chartType,chartSettings }) => {
+//   console.log("hello",chartSettings)
+//   // const chartSettings = useSelector(selectChartSettings);
+//   const dispatch = useDispatch();
+//   const currentSettings = chartSettings[chartType] || { colors: ['#000000'], titleFontSize: 16 };
+
+//   const handleColorChange = (index, color) => {
+//     const newColors = [...currentSettings.colors];
+//     newColors[index] = color;
+//     dispatch(
+//       setChartSettings({
+//         chartType: chartType,
+//         settings: {
+//           ...currentSettings,
+//           colors: newColors,
+//         },
+//       })
+//     );
+//   };
+
+//   const handleFontSizeChange = (e) => {
+//     dispatch(
+//       setChartSettings({
+//         chartType: chartType,
+//         settings: {
+//           ...currentSettings,
+//           titleFontSize: parseInt(e.target.value, 10),
+//         },
+//       })
+//     );
+//   };
+
+//   return (
+//     <div className="p-4">
+//       <h4 className="text-lg font-semibold">{chartType} Settings</h4>
+//       <div className="mb-6">
+//         <h5 className="text-sm font-medium mb-2">Colors</h5>
+//         {currentSettings.colors.map((color, index) => (
+//           <div key={index} className="mb-2">
+//             <input
+//               type="color"
+//               value={color}
+//               onChange={(e) => handleColorChange(index, e.target.value)}
+//               className="w-12 h-12 cursor-pointer border rounded"
+//             />
+//           </div>
+//         ))}
+//       </div>
+//       <div className="mb-6">
+//         <h5 className="text-sm font-medium mb-2">Font Size</h5>
+//         <input
+//           type="number"
+//           value={currentSettings.titleFontSize}
+//           onChange={handleFontSizeChange}
+//           min="10"
+//           max="30"
+//           className="border p-1 rounded w-20"
+//         />
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default ChartSettings;
+// src/components/ChartSettings.jsx
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectChartSettings } from '../store/selectors/charts.selectors';
-import { setChartSettings } from '../store/reducers/charts.reducers';
-const ChartSettings = () => {
-const chartSettings=useSelector(selectChartSettings)
-const dispatch=useDispatch()
-const handleDownloadSettings = () => {
-  const convertToJsFormat = (data, indentLevel = 0) => {
-    const indent = '  '.repeat(indentLevel);
-    const entries = Object.entries(data).map(([key, value]) => {
+import {
+  selectRadialChartState,
+  selectBarChartState,
+  selectLineChartState,
+  selectPieChartState,
+} from '../store/selectors/charts.selectors';
+import {
+  setRadialChartSettings,
+  setBarChartSettings,
+  setLineChartSettings,
+  setPieChartSettings,
+} from '../store/reducers/charts.reducers';
 
-      if (Array.isArray(value)) {
-        return `${indent}${key}: ${JSON.stringify(value, null, 2)}`;
-      } else if (typeof value === 'object' && value !== null) {
-        return `${indent}${key}: ${convertToJsFormat(value, indentLevel + 1)}`;
-      } else {
-        return `${indent}${key}: "${value}"`;
-      }
-    });
-    return `{\n${entries.join(',\n')}\n${indent}}`;
-  };
 
+
+const ChartSettings = ({ selectedChart ,chartSettings}) => {
+  console.log("chartSettings",chartSettings)
+  
  
-  const jsContent = `const chartSettings = ${convertToJsFormat(chartSettings)};`;
-  const settingsBlob = new Blob([jsContent], {
-    type: 'application/javascript',
-  });
-  const url = URL.createObjectURL(settingsBlob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'chartSettings.js';
-  a.click();
-  URL.revokeObjectURL(url);
-};
+  const dispatch = useDispatch();
+  
 
   const handleColorChange = (index, color) => {
     const newColors = [...chartSettings.colors];
     newColors[index] = color;
-    dispatch(
-      setChartSettings({
-        ...chartSettings,
-        colors: newColors,
-      })
-    );
+
+    switch (selectedChart) {
+      case 'Radial Chart':
+        dispatch(setRadialChartSettings({ ...chartSettings, colors: newColors }));
+        break;
+      case 'Bar Chart':
+        dispatch(setBarChartSettings({ ...chartSettings, colors: newColors }));
+        break;
+      case 'Line Chart':
+        dispatch(setLineChartSettings({ ...chartSettings, colors: newColors }));
+        break;
+      case 'Pie Chart':
+        dispatch(setPieChartSettings({ ...chartSettings, colors: newColors }));
+        break;
+      default:
+        break;
+    }
   };
 
   const handleFontSizeChange = (e) => {
-    dispatch(
-      setChartSettings({
-        ...chartSettings,
-        titleFontSize: parseInt(e.target.value, 10),
-      })
-    );
+    const newFontSize = parseInt(e.target.value, 10);
+
+    switch (selectedChart) {
+      case 'Radial Chart':
+        dispatch(setRadialChartSettings({ ...chartSettings, titleFontSize: newFontSize }));
+        break;
+      case 'Bar Chart':
+        dispatch(setBarChartSettings({ ...chartSettings, titleFontSize: newFontSize }));
+        break;
+      case 'Line Chart':
+        dispatch(setLineChartSettings({ ...chartSettings, titleFontSize: newFontSize }));
+        break;
+      case 'Pie Chart':
+        dispatch(setPieChartSettings({ ...chartSettings, titleFontSize: newFontSize }));
+        break;
+      default:
+        break;
+    }
   };
 
-
   return (
-    <div className="w-64 bg-gray-100 p-4">
-      <h3 className="text-lg font-semibold mb-4">Customize Chart</h3>
-
-    
+    <div className="p-4">
+      <h4 className="text-lg font-semibold">{selectedChart} Settings</h4>
       <div className="mb-6">
-        <h4 className="text-sm font-medium mb-2">Colors</h4>
+        <h5 className="text-sm font-medium mb-2">Colors</h5>
         {chartSettings.colors.map((color, index) => (
           <div key={index} className="mb-2">
             <input
@@ -73,10 +152,8 @@ const handleDownloadSettings = () => {
           </div>
         ))}
       </div>
-
-    
       <div className="mb-6">
-        <h4 className="text-sm font-medium mb-2">Font Size</h4>
+        <h5 className="text-sm font-medium mb-2">Font Size</h5>
         <input
           type="number"
           value={chartSettings.titleFontSize}
@@ -86,16 +163,9 @@ const handleDownloadSettings = () => {
           className="border p-1 rounded w-20"
         />
       </div>
-
-      
-      <button
-        onClick={handleDownloadSettings}
-        className="bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-600"
-      >
-        Download JS Settings
-      </button>
     </div>
   );
 };
 
 export default ChartSettings;
+

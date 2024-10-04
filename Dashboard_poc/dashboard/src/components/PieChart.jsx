@@ -4,6 +4,7 @@ import Chart from 'react-apexcharts';
 import ChartCard from './ChartCard';
 
 const PieChart = ({ chartSettings, data }) => {
+   console.log("data",data)
 
   const getResponsiveOptions = () => {
     const screenWidth = window.innerWidth;
