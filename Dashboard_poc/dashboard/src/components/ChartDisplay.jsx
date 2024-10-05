@@ -56,6 +56,7 @@ import RadialChart from './RadialChart';
 import BarChart from './BarChart';
 import LineChart from './LineChart';
 import PieChart from './PieChart';
+
 import {
   selectRadialChartState,
   selectBarChartState,
@@ -64,6 +65,14 @@ import {
 } from '../store/selectors/charts.selectors';
 
 const ChartDisplay = () => {
+=======
+import { selectActiveAccordion, selectChartSettings } from '../store/selectors/charts.selectors';
+
+
+const ChartDisplay = () => {
+  const chartSettings=useSelector(selectChartSettings)
+  const activeAccordion=useSelector(selectActiveAccordion)
+
   
   const radialSettings = useSelector(selectRadialChartState);
   const barSettings = useSelector(selectBarChartState);
@@ -101,8 +110,24 @@ const ChartDisplay = () => {
       <BarChart chartSettings={barSettings} data={barData} />
       <LineChart chartSettings={lineSettings} data={lineData} />
       <PieChart chartSettings={pieSettings} data={pieData} />
+
+    <div className="flex-grow p-6 flex items-center justify-center">
+      {activeAccordion === 'Radial Chart' && (
+        <RadialChart chartSettings={chartSettings} value={radialValue} />
+      )}
+      {activeAccordion === 'Bar Graph' && (
+        <BarChart chartSettings={chartSettings} data={barData} />
+      )}
+      {activeAccordion === 'Line Graph' && (
+        <LineChart chartSettings={chartSettings} data={lineData} />
+      )}
+      {activeAccordion === 'Pie Chart' && (
+        <PieChart chartSettings={chartSettings} data={pieData} />
+      )}
+
     </div>
   );
+  
 };
 
 export default ChartDisplay;

@@ -2,6 +2,7 @@
 import { createSlice} from "@reduxjs/toolkit";
 
 
+
 const initialRadialChartState = {
   radialChartSetting: {
   colors: ['#FFC0CB'],
@@ -10,6 +11,15 @@ const initialRadialChartState = {
   titleColor: '#4b5462',
   activeAccordion: false,
 }
+
+const initialState = {
+   chartSettings: {
+        colors: ['#e15e9d', '#5fbaff', '#e15e9d'],
+        titleFontSize: 10,
+        titleFontWeight: 400,
+        titleColor: '#4b5462',
+      },
+      activeAccordion:null
 };
 
 const initialBarChartState = {
@@ -72,6 +82,7 @@ const lineChartSlice = createSlice({
   name: "lineChart",
   initialState: initialLineChartState,
   reducers: {
+
     setLineChartSettings: (state, action) => {
        state.lineChartSetting=action.payload
     },
@@ -80,6 +91,18 @@ const lineChartSlice = createSlice({
     },
   },
 });
+
+
+    setChartSettings: (state, action) => {
+      state.chartSettings = action.payload;
+    },
+    setActiveAccordion:(state,action)=>{
+      state.activeAccordion=action.payload;
+    }
+  },
+});
+
+export const { setChartSettings,setActiveAccordion} = ChartReducer.actions;
 
 
 const pieChartSlice = createSlice({

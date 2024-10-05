@@ -71,6 +71,7 @@
 // src/components/ChartSettings.jsx
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+
 import {
   selectRadialChartState,
   selectBarChartState,
@@ -83,6 +84,18 @@ import {
   setLineChartSettings,
   setPieChartSettings,
 } from '../store/reducers/charts.reducers';
+
+
+import { selectChartSettings } from '../store/selectors/charts.selectors';
+import { setChartSettings } from '../store/reducers/charts.reducers';
+import Example from './accordian';
+const ChartSettings = () => {
+const chartSettings=useSelector(selectChartSettings)
+const dispatch=useDispatch()
+const handleDownloadSettings = () => {
+  const convertToJsFormat = (data, indentLevel = 0) => {
+    const indent = '  '.repeat(indentLevel);
+    const entries = Object.entries(data).map(([key, value]) => {
 
 
 
@@ -137,8 +150,14 @@ const ChartSettings = ({ selectedChart ,chartSettings}) => {
   };
 
   return (
+
     <div className="p-4">
       <h4 className="text-lg font-semibold">{selectedChart} Settings</h4>
+
+    <div className="w-64 bg-gray-100 p-4">
+      <h3 className="text-lg font-semibold mb-4">Customize Chart</h3>
+      <Example/>
+   
       <div className="mb-6">
         <h5 className="text-sm font-medium mb-2">Colors</h5>
         {chartSettings.colors.map((color, index) => (

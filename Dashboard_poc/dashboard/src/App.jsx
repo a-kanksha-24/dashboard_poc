@@ -1,8 +1,10 @@
+
+
+import ChartSettings from './components/ChartSettings';
 import ChartDisplay from './components/ChartDisplay';
 import ChartAccordion from './components/ChartAccordian';
 
 function App() {
-
   return (
     <div className="flex">
       <ChartAccordion />
