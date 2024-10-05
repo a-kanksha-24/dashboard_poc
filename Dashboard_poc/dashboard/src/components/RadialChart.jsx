@@ -13,13 +13,13 @@ const RadialChart = ({ chartSettings, value }) => {
     let titleFontSize = `${chartSettings.titleFontSize}px`;
 
     
-    if (screenWidth < 740) { 
-      hollowSize = '70%'; 
-      titleFontSize = '16px'; 
-    } else if (screenWidth < 1024) { 
-      hollowSize = '75%';
-      titleFontSize = `${chartSettings.titleFontSize - 2}px`; 
-    }
+    // if (screenWidth < 740) { 
+    //   hollowSize = '70%'; 
+    //   titleFontSize = '16px'; 
+    // } else if (screenWidth < 1024) { 
+    //   hollowSize = '75%';
+    //   titleFontSize = `${chartSettings.titleFontSize - 2}px`; 
+    // }
 
     return {
       chart: {
